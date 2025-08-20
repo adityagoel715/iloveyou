@@ -1,7 +1,7 @@
 import postcard from "../components/postcard.jpg"
 import { useNavigate } from "react-router-dom";
 
-export default function Home() {
+export default function Note() {
   const navigate=useNavigate();
   
   const handleClick = () => {

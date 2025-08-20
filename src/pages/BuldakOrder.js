@@ -1,5 +1,7 @@
+import { useNavigate } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import buldak  from "../components/buldak.png"
+
 
 const CORRECT = [
   { id: "1", text: "Boil water in a pot" },
@@ -22,11 +24,13 @@ function shuffle(arr) {
 
 const TOTAL_TIME = 35; // seconds
 
+
 export default function BuldakOrderGame() {
   const initial = useMemo(() => shuffle(CORRECT), []);
   const [items, setItems] = useState(initial);
   const [result, setResult] = useState(null); // "win" | "try" | "time" | null
   const [dragIndex, setDragIndex] = useState(null);
+  const navigate= useNavigate();
 
   // timer
   const [timeLeft, setTimeLeft] = useState(TOTAL_TIME);
@@ -74,8 +78,11 @@ export default function BuldakOrderGame() {
     if (timeLeft <= 0) return; // ignore after time’s up
     const ok = items.every((it, i) => it.id === CORRECT[i].id);
     setResult(ok ? "win" : "try");
-    if (ok) setRunning(false);
-  };
+    if (ok){setResult("win"); setRunning(false); navigate('/reward')
+  }else{
+setResult("try");
+  }
+};
 
   const reset = () => {
     setItems(shuffle(CORRECT));
